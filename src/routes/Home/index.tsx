@@ -1,7 +1,7 @@
-import {Layout} from '../../ui/components';
+import Template from './template';
 
 function Home() {
-  return <Layout header={{title: 'ProductHunter'}} />;
+  return <Template />;
 }
 
 export default Home;

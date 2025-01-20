@@ -3,6 +3,10 @@ export const theme = {
     text: {
       primary: '#141414',
       secondary: 'white',
+      inactive: '#B4B4B4',
+    },
+    border: {
+      primary: '#B4B4B4',
     },
   },
   spacing: {
@@ -22,6 +26,11 @@ export const theme = {
     lg: 24,
     xl: 32,
     xxl: 40,
+  },
+  borderRadius: {
+    sm: 4,
+    md: 8,
+    lg: 12,
   },
 } as const;
 

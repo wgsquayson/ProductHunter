@@ -8,10 +8,10 @@ function Layout({header, children}: LayoutProps) {
   const styles = useStyle(theme => ({
     safeArea: {
       flex: 1,
+      paddingHorizontal: theme.spacing.sml,
     },
     header: {
       flexDirection: 'row',
-      paddingHorizontal: theme.spacing.sml,
       paddingVertical: theme.spacing.md,
     },
   }));
