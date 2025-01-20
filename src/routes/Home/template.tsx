@@ -1,6 +1,6 @@
 import Icon from '@react-native-vector-icons/fontawesome';
-import {TextInput, View} from 'react-native';
-import {Layout} from '../../ui/components';
+import {Image, TextInput, TouchableOpacity, View} from 'react-native';
+import {Layout, Spacer, Text} from '../../ui/components';
 import {useStyle} from '../../ui/hooks';
 import {useState} from 'react';
 
@@ -19,6 +19,20 @@ export default function () {
     input: {
       flex: 1,
     },
+    product: {
+      flexDirection: 'row',
+      padding: theme.spacing.sml,
+      borderRadius: theme.borderRadius.lg,
+      backgroundColor: theme.color.background.primaryDarker,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    productInfo: {
+      flexDirection: 'row',
+      gap: theme.spacing.sml,
+      alignItems: 'center',
+    },
+    productThumbnail: {width: 60, height: 60},
   }));
 
   const [search, setSearch] = useState('');
@@ -39,6 +53,23 @@ export default function () {
           style={styles.input}
         />
       </View>
+      <Spacer size="sml" />
+      <TouchableOpacity style={styles.product}>
+        <View style={styles.productInfo}>
+          <Image
+            source={{
+              uri: 'https://tempodecozimento.com.br/wp-content/uploads/2023/12/Arroz.png',
+            }}
+            style={styles.productThumbnail}
+            resizeMode="contain"
+          />
+          <View>
+            <Text>Rice</Text>
+            <Text variant="highlight">USD 2,00</Text>
+          </View>
+        </View>
+        <Icon name="chevron-right" size={styles.theme.fontSizes.md} />
+      </TouchableOpacity>
     </Layout>
   );
 }

@@ -5,7 +5,8 @@ export type TextVariant =
   | 'bold'
   | 'heading1'
   | 'heading2'
-  | 'heading3';
+  | 'heading3'
+  | 'highlight';
 
 export type TextProps = RNTextProps & {
   variant?: TextVariant;

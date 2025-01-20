@@ -33,6 +33,11 @@ function Text({
       fontSize: theme.fontSizes.lg,
       fontWeight: 900,
     },
+    highlight: {
+      color,
+      fontSize: theme.fontSizes.md,
+      fontWeight: 700,
+    },
   }));
 
   return (

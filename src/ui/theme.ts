@@ -8,6 +8,10 @@ export const theme = {
     border: {
       primary: '#B4B4B4',
     },
+    background: {
+      primary: 'white',
+      primaryDarker: '#E5E5E5',
+    },
   },
   spacing: {
     xxxs: 4,
