@@ -14,6 +14,7 @@ const RootStack = createNativeStackNavigator<RootStackProps>({
   screenOptions: {
     headerShown: false,
   },
+  initialRouteName: 'Home',
   screens: {
     Home,
     ProductDetails,

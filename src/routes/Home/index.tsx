@@ -1,5 +1,7 @@
+import {Layout} from '../../ui/components';
+
 function Home() {
-  return null;
+  return <Layout header={{title: 'ProductHunter'}} />;
 }
 
 export default Home;
