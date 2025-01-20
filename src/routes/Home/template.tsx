@@ -3,8 +3,9 @@ import {Image, TextInput, TouchableOpacity, View} from 'react-native';
 import {Layout, Spacer, Text} from '../../ui/components';
 import {useStyle} from '../../ui/hooks';
 import {useState} from 'react';
+import {TemplateProps} from './model';
 
-export default function () {
+export default function ({products}: TemplateProps) {
   const styles = useStyle(theme => ({
     inputContainer: {
       height: theme.spacing.xxl,
