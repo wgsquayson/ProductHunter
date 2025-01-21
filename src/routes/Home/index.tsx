@@ -37,7 +37,10 @@ function Home() {
       return;
     }
 
-    const {data, error} = await fetchProducts({search: value});
+    const {data, error} = await fetchProducts({
+      search: value,
+      sort: selectedSort,
+    });
 
     if (data) {
       setProducts(data);
