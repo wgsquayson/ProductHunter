@@ -10,6 +10,8 @@ function Home() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasReachedTotal, setHasReachedTotal] = useState(false);
 
+  const [search, setSearch] = useState('');
+
   async function getProducts() {
     const {data} = await fetchProducts({});
 
@@ -42,6 +44,10 @@ function Home() {
     }
   }, [currentPage, loading, loadingMore, hasReachedTotal, products.length]);
 
+  function handleSearch(value: string) {
+    setSearch(value);
+  }
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -50,8 +56,10 @@ function Home() {
     <Template
       products={products}
       loading={loading}
-      loadingMore={loadingMore}
+      isLoadingMore={loadingMore}
       onEndReached={loadMoreProducts}
+      search={search}
+      onSearch={handleSearch}
     />
   );
 }

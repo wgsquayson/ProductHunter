@@ -5,12 +5,21 @@ export type ProductListItem = Pick<
   'id' | 'title' | 'thumbnail' | 'price'
 >;
 
-export type TemplateProps = {
-  products: ProductListItem[];
-  loading: boolean;
-  loadingMore: boolean;
-  onEndReached: () => void;
+export type HeaderProps = {
+  search: string;
+  onSearch: (value: string) => void;
 };
+
+export type FooterProps = {
+  isLoadingMore: boolean;
+};
+
+export type TemplateProps = HeaderProps &
+  FooterProps & {
+    products: ProductListItem[];
+    loading: boolean;
+    onEndReached: () => void;
+  };
 
 export type FetchProductsProps = {
   page?: number;
