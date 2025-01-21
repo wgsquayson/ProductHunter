@@ -26,7 +26,14 @@ export type TemplateProps = HeaderProps &
     onEndReached: () => void;
   };
 
+type SortParams = {
+  by: 'price' | 'rating';
+  order: 'asc' | 'desc';
+};
+
 export type FetchProductsProps = {
   page?: number;
   search?: string;
+  sort?: SortParams;
+  category?: string;
 };
