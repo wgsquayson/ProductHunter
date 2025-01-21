@@ -7,4 +7,5 @@ export type HomeState = {
   loadingMore: boolean;
   hasReachedTotal: boolean;
   categories: string[];
+  errorMessage?: string;
 };

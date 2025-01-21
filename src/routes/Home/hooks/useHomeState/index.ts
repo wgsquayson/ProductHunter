@@ -4,7 +4,7 @@ import {fetchProductCategories, fetchProducts} from '../../service';
 import {ITEMS_PER_PAGE} from '../../constants';
 import {HomeState} from './model';
 
-export default function useHomeState(onError: (message: string) => void) {
+export default function useHomeState() {
   const [state, setState] = useState<HomeState>({
     products: [],
     categories: [],
@@ -22,6 +22,10 @@ export default function useHomeState(onError: (message: string) => void) {
     if (typeof dataLength === 'number' && dataLength < ITEMS_PER_PAGE) {
       updateState({loadingMore: false, hasReachedTotal: true});
     }
+  }
+
+  function handleRequestError(error: string) {
+    updateState({products: [], hasReachedTotal: true, errorMessage: error});
   }
 
   async function getInitialData(
@@ -46,7 +50,7 @@ export default function useHomeState(onError: (message: string) => void) {
     const error = productsError || categoriesError;
 
     if (error) {
-      onError(error);
+      handleRequestError(error);
     }
 
     updateState({loading: false});
@@ -76,7 +80,7 @@ export default function useHomeState(onError: (message: string) => void) {
     }
 
     if (error) {
-      onError(error);
+      handleRequestError(error);
       updateState({loadingMore: false});
     }
 
@@ -89,5 +93,6 @@ export default function useHomeState(onError: (message: string) => void) {
     getInitialData,
     loadMoreProducts,
     handleTotalReached,
+    handleRequestError,
   };
 }

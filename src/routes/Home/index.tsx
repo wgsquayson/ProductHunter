@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import Template from './template';
 
 import useProductSearch from './hooks/useProductSearch';
@@ -7,16 +7,6 @@ import useProductSort from './hooks/useProductSort';
 import useHomeState from './hooks/useHomeState';
 
 function Home() {
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const {
-    state,
-    updateState,
-    getInitialData,
-    handleTotalReached,
-    loadMoreProducts,
-  } = useHomeState(() => {});
-
   function resetPage() {
     updateState({currentPage: 1});
   }
@@ -31,11 +21,20 @@ function Home() {
     resetCategory();
   }
 
-  function handleRequestError(error: string) {
-    updateState({products: [], hasReachedTotal: true});
-
-    setErrorMessage(error);
+  function handleRemoveFilters() {
+    resetSort();
+    resetCategory();
+    getInitialData();
   }
+
+  const {
+    state,
+    updateState,
+    getInitialData,
+    handleTotalReached,
+    loadMoreProducts,
+    handleRequestError,
+  } = useHomeState();
 
   const {selectedSort, handleSelectSort, resetSort} = useProductSort({
     onSort: resetPage,
@@ -62,12 +61,6 @@ function Home() {
       onTotalReached: handleTotalReached,
     });
 
-  function handleRemoveFilters() {
-    resetSort();
-    resetCategory();
-    getInitialData();
-  }
-
   useEffect(() => {
     getInitialData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +80,7 @@ function Home() {
       }
       search={search}
       onSearch={handleSearch}
-      error={errorMessage}
+      error={state.errorMessage}
       categories={state.categories}
       selectedCategory={selectedCategory}
       onPressCategory={handleSelectCategory}
