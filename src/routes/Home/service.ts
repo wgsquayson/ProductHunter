@@ -2,18 +2,7 @@ import {FetchResponse} from '../../models/fetch';
 import api from '../../service/api';
 import {ITEMS_PER_PAGE} from './constants';
 import {FetchProductsProps, ProductListItem} from './model';
-
-function getUrlPrefix(search?: string, category?: string) {
-  if (search) {
-    return `/products/search?q=${search?.toLowerCase()}&`;
-  }
-
-  if (category) {
-    return `/products/category/${category}?`;
-  }
-
-  return '/products?';
-}
+import {getUrlPrefix} from './utils';
 
 export async function fetchProducts({
   page = 1,
@@ -36,10 +25,26 @@ export async function fetchProducts({
     );
 
     result.data = response.data.products;
-    result.total = response.data.total;
   } catch (err) {
     result.error =
       'An error happened while trying to search your product. Try again later.';
+  }
+
+  return result;
+}
+
+export async function fetchProductCategories(): Promise<
+  FetchResponse<string[]>
+> {
+  let result: FetchResponse<string[]> = {};
+
+  try {
+    const response = await api.get('/products/category-list');
+
+    result.data = response.data;
+  } catch (error) {
+    result.error =
+      'An error happened while trying to search for product categories. Try again later.';
   }
 
   return result;
