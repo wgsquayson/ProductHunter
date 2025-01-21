@@ -22,7 +22,8 @@ export async function fetchProducts({
     result.data = response.data.products;
     result.total = response.data.total;
   } catch (error) {
-  } finally {
+    result.error =
+      'An error happened while trying to search your product. Try again later.';
   }
 
   return result;

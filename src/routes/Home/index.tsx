@@ -10,6 +10,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasReachedTotal, setHasReachedTotal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [search, setSearch] = useState('');
 
@@ -18,26 +19,26 @@ function Home() {
     setHasReachedTotal(true);
   }
 
+  function handleRequestError(error: string) {
+    setProducts([]);
+    setErrorMessage(error);
+  }
+
   const debounceSearch = useDebouncedCallback(async (value: string) => {
-    const {data, total} = await fetchProducts({search: value});
+    const {data, total, error} = await fetchProducts({search: value});
 
     if (data) {
       setProducts(data);
     }
 
-    if (total && products.length >= total) {
+    if (error) {
+      return handleRequestError(error);
+    }
+
+    if ((total && products.length >= total) || data?.length === 0) {
       handleTotalReached();
     }
   }, 500);
-
-  async function getInitialProducts() {
-    const {data} = await fetchProducts({});
-
-    if (data) {
-      setLoading(false);
-      return setProducts(data);
-    }
-  }
 
   const loadMoreProducts = useCallback(async () => {
     if (loading || loadingMore || hasReachedTotal) {
@@ -46,12 +47,19 @@ function Home() {
 
     setLoadingMore(true);
 
-    const {data, total} = await fetchProducts({page: currentPage + 1, search});
+    const {data, total, error} = await fetchProducts({
+      page: currentPage + 1,
+      search,
+    });
 
     if (data) {
       setCurrentPage(prev => (prev += 1));
       setLoadingMore(false);
       setProducts(prev => [...prev, ...data]);
+    }
+
+    if (error) {
+      return handleRequestError(error);
     }
 
     if (total && products.length >= total) {
@@ -81,9 +89,23 @@ function Home() {
     debounceSearch(value);
   }
 
+  async function getInitialProducts() {
+    const {data, error} = await fetchProducts({});
+
+    if (data) {
+      setLoading(false);
+      setProducts(data);
+    }
+
+    if (error) {
+      return handleRequestError(error);
+    }
+  }
+
   useEffect(() => {
     getInitialProducts();
-  }, [search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Template
@@ -93,6 +115,7 @@ function Home() {
       onEndReached={loadMoreProducts}
       search={search}
       onSearch={handleSearch}
+      error={errorMessage}
     />
   );
 }
