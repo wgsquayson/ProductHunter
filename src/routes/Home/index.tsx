@@ -21,6 +21,11 @@ function Home() {
     }
   }
 
+  function handleTotalReached() {
+    setLoadingMore(false);
+    setHasReachedTotal(true);
+  }
+
   const loadMoreProducts = useCallback(async () => {
     if (loading || loadingMore || hasReachedTotal) {
       return;
@@ -28,24 +33,42 @@ function Home() {
 
     setLoadingMore(true);
 
-    const {data, total} = await fetchProducts({page: currentPage + 1});
-
-    if (total && products.length >= total) {
-      setLoadingMore(false);
-      setHasReachedTotal(true);
-
-      return;
-    }
+    const {data, total} = await fetchProducts({page: currentPage + 1, search});
 
     if (data) {
       setCurrentPage(prev => (prev += 1));
       setLoadingMore(false);
-      return setProducts(prev => [...prev, ...data]);
+      setProducts(prev => [...prev, ...data]);
     }
-  }, [currentPage, loading, loadingMore, hasReachedTotal, products.length]);
 
-  function handleSearch(value: string) {
+    if (total && products.length >= total) {
+      handleTotalReached();
+    }
+  }, [
+    currentPage,
+    loading,
+    loadingMore,
+    hasReachedTotal,
+    products.length,
+    search,
+  ]);
+
+  async function handleSearch(value: string) {
     setSearch(value);
+
+    if (value.length <= 3) {
+      return;
+    }
+
+    const {data, total} = await fetchProducts({search: value});
+
+    if (data) {
+      setProducts(data);
+    }
+
+    if (total && products.length >= total) {
+      handleTotalReached();
+    }
   }
 
   useEffect(() => {

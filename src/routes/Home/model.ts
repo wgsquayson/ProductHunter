@@ -23,4 +23,5 @@ export type TemplateProps = HeaderProps &
 
 export type FetchProductsProps = {
   page?: number;
+  search?: string;
 };

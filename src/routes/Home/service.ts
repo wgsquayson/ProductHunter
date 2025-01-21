@@ -6,23 +6,23 @@ const ITEMS_PER_PAGE = 20;
 
 export async function fetchProducts({
   page = 1,
+  search,
 }: FetchProductsProps): Promise<FetchResponse<ProductListItem[]>> {
-  let result: FetchResponse<ProductListItem[]> = {
-    loading: true,
-  };
+  let result: FetchResponse<ProductListItem[]> = {};
 
   const skip = (page - 1) * ITEMS_PER_PAGE;
 
   try {
     const response = await api.get(
-      `/products?limit=${ITEMS_PER_PAGE}&skip=${skip}&select=title,price,thumbnail,id`,
+      search
+        ? `/products/search?q=${search?.toLowerCase()}&select=title,price,thumbnail,id&limit=${ITEMS_PER_PAGE}&skip=${skip}`
+        : `/products?limit=${ITEMS_PER_PAGE}&skip=${skip}&select=title,price,thumbnail,id`,
     );
 
     result.data = response.data.products;
     result.total = response.data.total;
   } catch (error) {
   } finally {
-    result.loading = false;
   }
 
   return result;
