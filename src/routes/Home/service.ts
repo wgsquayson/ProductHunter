@@ -2,7 +2,18 @@ import {FetchResponse} from '../../models/fetch';
 import api from '../../service/api';
 import {ITEMS_PER_PAGE} from './constants';
 import {FetchProductsProps, ProductListItem} from './model';
-import {getUrlPrefix} from './utils';
+
+function getUrlPrefix(search?: string, category?: string) {
+  if (search) {
+    return `/products/search?q=${search?.toLowerCase()}&`;
+  }
+
+  if (category) {
+    return `/products/category/${category}?`;
+  }
+
+  return '/products?';
+}
 
 export async function fetchProducts({
   page = 1,
