@@ -1,9 +1,9 @@
-import {ProductApiResponse} from '../../models/product';
-
-export type ProductListItem = Pick<
-  ProductApiResponse,
-  'id' | 'title' | 'thumbnail' | 'price'
->;
+export type ProductListItem = {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+};
 
 export type HeaderProps = {
   search: string;

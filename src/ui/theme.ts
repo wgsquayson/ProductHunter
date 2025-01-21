@@ -11,6 +11,7 @@ export const theme = {
     background: {
       primary: 'white',
       primaryDarker: '#E5E5E5',
+      lowOpacity: 'rgba(0, 0, 0, 0.4)',
     },
   },
   spacing: {

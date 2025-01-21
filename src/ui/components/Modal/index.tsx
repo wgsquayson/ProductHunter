@@ -16,7 +16,7 @@ export default function Modal({
       flex: 1,
       justifyContent: 'center',
       padding: theme.spacing.sml,
-      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      backgroundColor: theme.color.background.lowOpacity,
     },
     content: {
       maxHeight: '60%',
