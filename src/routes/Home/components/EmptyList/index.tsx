@@ -1,5 +1,5 @@
 import {Loading, Text} from '../../../../ui/components';
-import {EmptyListProps} from '../../model';
+import {EmptyListProps} from './model';
 
 export default function EmptyList({loading, error}: EmptyListProps) {
   if (loading) {

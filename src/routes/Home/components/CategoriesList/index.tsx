@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {categoriesListEmitter} from './utils';
-import {CategoriesListProps} from '../../model';
+import {CategoriesListProps} from './model';
 import {Button, Modal, Spacer} from '../../../../ui/components';
 import {formatCategory} from '../Header/utils';
 

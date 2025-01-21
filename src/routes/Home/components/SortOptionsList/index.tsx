@@ -1,9 +1,10 @@
 import {useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
 import {sortListEmitter} from './utils';
-import {SortOptionsListProps, SortParams} from '../../model';
 import {Button, Modal, Spacer} from '../../../../ui/components';
 import {sortMap} from '../Header/utils';
+import {SortParams} from '../../service/model';
+import {SortOptionsListProps} from './model';
 
 export default function SortOptionsList({onPressSort}: SortOptionsListProps) {
   const [visible, setVisible] = useState(false);

@@ -1,4 +1,5 @@
-import {ProductListItem, SortParams} from '../../model';
+import {ProductListItem} from '../../components/ProductListItem/model';
+import {SortParams} from '../../service/model';
 
 export type UseProductFilter = {
   selectedSort?: SortParams;

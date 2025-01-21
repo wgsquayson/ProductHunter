@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {SortParams} from '../../model';
 import {fetchProducts} from '../../service';
 import {SortSearchParams, UseProductSort} from './model';
+import {SortParams} from '../../service/model';
 
 export default function useProductSort({
   onSort,

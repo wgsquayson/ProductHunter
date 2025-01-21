@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import {FetchProductsParams} from '../../model';
 import {fetchProductCategories, fetchProducts} from '../../service';
 import {ITEMS_PER_PAGE} from '../../constants';
 import {HomeState} from './model';
+import {FetchProductsParams} from '../../service/model';
 
 export default function useHomeState() {
   const [state, setState] = useState<HomeState>({

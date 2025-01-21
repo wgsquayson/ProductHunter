@@ -2,7 +2,7 @@ import {Image, TouchableOpacity, View} from 'react-native';
 import {Text} from '../../../../ui/components';
 import Icon from '@react-native-vector-icons/fontawesome';
 import {useStyle} from '../../../../ui/hooks';
-import {ProductListItem} from '../../model';
+import {ProductListItem} from './model';
 
 export default function ProductListItemComponent(item: ProductListItem) {
   const styles = useStyle(theme => ({

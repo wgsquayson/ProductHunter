@@ -1,5 +1,5 @@
 import {ButtonProps} from '../../../../ui/components/';
-import {SortParams} from '../../model';
+import {SortParams} from '../../service/model';
 
 export const sortMap: Record<
   SortParams['by'],
