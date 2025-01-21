@@ -3,6 +3,7 @@ import Template from './template';
 import {fetchProducts} from './service';
 import {ProductListItem} from './model';
 import {useDebouncedCallback} from 'use-debounce';
+import {ITEMS_PER_PAGE} from './constants';
 
 function Home() {
   const [products, setProducts] = useState<ProductListItem[]>([]);
@@ -14,9 +15,11 @@ function Home() {
 
   const [search, setSearch] = useState('');
 
-  function handleTotalReached() {
-    setLoadingMore(false);
-    setHasReachedTotal(true);
+  function handleTotalReached(dataLength?: number) {
+    if (dataLength && dataLength < ITEMS_PER_PAGE) {
+      setLoadingMore(false);
+      setHasReachedTotal(true);
+    }
   }
 
   function handleRequestError(error: string) {
@@ -25,7 +28,11 @@ function Home() {
   }
 
   const debounceSearch = useDebouncedCallback(async (value: string) => {
-    const {data, total, error} = await fetchProducts({search: value});
+    if (value.length < 3) {
+      return;
+    }
+
+    const {data, error} = await fetchProducts({search: value});
 
     if (data) {
       setProducts(data);
@@ -35,9 +42,7 @@ function Home() {
       return handleRequestError(error);
     }
 
-    if ((total && products.length >= total) || data?.length === 0) {
-      handleTotalReached();
-    }
+    handleTotalReached(data?.length);
   }, 500);
 
   const loadMoreProducts = useCallback(async () => {
@@ -47,7 +52,7 @@ function Home() {
 
     setLoadingMore(true);
 
-    const {data, total, error} = await fetchProducts({
+    const {data, error} = await fetchProducts({
       page: currentPage + 1,
       search,
     });
@@ -62,34 +67,13 @@ function Home() {
       return handleRequestError(error);
     }
 
-    if (total && products.length >= total) {
-      handleTotalReached();
-    }
-  }, [
-    currentPage,
-    loading,
-    loadingMore,
-    hasReachedTotal,
-    products.length,
-    search,
-  ]);
-
-  function handleClearSearch() {
-    setCurrentPage(1);
-    setHasReachedTotal(false);
-  }
-
-  async function handleSearch(value: string) {
-    setSearch(value);
-
-    if (value.length === 0) {
-      return handleClearSearch();
-    }
-
-    debounceSearch(value);
-  }
+    handleTotalReached(data?.length);
+  }, [currentPage, loading, loadingMore, hasReachedTotal, search]);
 
   async function getInitialProducts() {
+    setCurrentPage(1);
+    setHasReachedTotal(false);
+
     const {data, error} = await fetchProducts({});
 
     if (data) {
@@ -100,6 +84,17 @@ function Home() {
     if (error) {
       return handleRequestError(error);
     }
+  }
+
+  async function handleSearch(value: string) {
+    setSearch(value);
+    setCurrentPage(1);
+
+    if (value.length === 0) {
+      return getInitialProducts();
+    }
+
+    debounceSearch(value);
   }
 
   useEffect(() => {

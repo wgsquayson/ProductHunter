@@ -1,12 +1,11 @@
 import {FetchResponse} from '../../models/fetch';
 import api from '../../service/api';
+import {ITEMS_PER_PAGE} from './constants';
 import {FetchProductsProps, ProductListItem} from './model';
-
-const ITEMS_PER_PAGE = 20;
 
 export async function fetchProducts({
   page = 1,
-  search,
+  search = '',
 }: FetchProductsProps): Promise<FetchResponse<ProductListItem[]>> {
   let result: FetchResponse<ProductListItem[]> = {};
 
@@ -25,6 +24,8 @@ export async function fetchProducts({
     result.error =
       'An error happened while trying to search your product. Try again later.';
   }
+
+  console.log({page, search, result});
 
   return result;
 }

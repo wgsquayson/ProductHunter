@@ -31,7 +31,7 @@ export default function Header({search, onSearch}: HeaderProps) {
           size={styles.theme.fontSizes.md}
         />
         <TextInput
-          placeholder="Search here..."
+          placeholder="Type at least 3 letters to start searching..."
           placeholderTextColor={styles.theme.color.text.inactive}
           value={search}
           onChangeText={onSearch}
