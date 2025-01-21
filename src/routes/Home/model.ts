@@ -8,6 +8,8 @@ export type ProductListItem = Pick<
 export type HeaderProps = {
   search: string;
   onSearch: (value: string) => void;
+  selectedCategory?: string;
+  selectedSort?: SortParams;
 };
 
 export type FooterProps = {
@@ -19,14 +21,21 @@ export type EmptyListProps = {
   error?: string;
 };
 
+export type CategoriesListProps = {
+  categories: string[];
+  onPressCategory: (category: string) => void;
+  onRemoveFilters: () => void;
+};
+
 export type TemplateProps = HeaderProps &
   FooterProps &
-  EmptyListProps & {
+  EmptyListProps &
+  CategoriesListProps & {
     products: ProductListItem[];
     onEndReached: () => void;
   };
 
-type SortParams = {
+export type SortParams = {
   by: 'price' | 'rating';
   order: 'asc' | 'desc';
 };

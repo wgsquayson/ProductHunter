@@ -2,10 +2,17 @@ import React from 'react';
 import {TextInput, View} from 'react-native';
 import {useStyle} from '../../../../ui/hooks';
 import Icon from '@react-native-vector-icons/fontawesome';
-import {Spacer} from '../../../../ui/components';
+import {Button, Spacer} from '../../../../ui/components';
 import {HeaderProps} from '../../model';
+import {getCategoryName, getSortButtonProps} from './utils';
+import {categoriesListEmitter} from '../CategoriesList/utils';
 
-export default function Header({search, onSearch}: HeaderProps) {
+export default function Header({
+  search,
+  onSearch,
+  selectedCategory,
+  selectedSort,
+}: HeaderProps) {
   const styles = useStyle(theme => ({
     inputContainer: {
       height: theme.spacing.xxl,
@@ -20,7 +27,16 @@ export default function Header({search, onSearch}: HeaderProps) {
     input: {
       flex: 1,
     },
+    buttonsContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.xxs,
+    },
   }));
+
+  function onPressCategory() {
+    categoriesListEmitter.emit('openModal');
+  }
 
   return (
     <>
@@ -37,6 +53,15 @@ export default function Header({search, onSearch}: HeaderProps) {
           onChangeText={onSearch}
           style={styles.input}
         />
+      </View>
+      <Spacer size="sml" />
+      <View style={styles.buttonsContainer}>
+        <Button
+          text={getCategoryName(selectedCategory)}
+          icon="filter"
+          onPress={onPressCategory}
+        />
+        <Button {...getSortButtonProps(selectedSort)} />
       </View>
       <Spacer size="sml" />
     </>

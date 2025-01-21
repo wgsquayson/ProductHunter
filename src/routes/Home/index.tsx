@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import Template from './template';
-import {fetchProducts} from './service';
-import {ProductListItem} from './model';
+import {fetchProductCategories, fetchProducts} from './service';
+import {ProductListItem, SortParams} from './model';
 import {useDebouncedCallback} from 'use-debounce';
 import {ITEMS_PER_PAGE} from './constants';
 
@@ -14,6 +14,10 @@ function Home() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [search, setSearch] = useState('');
+
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>();
+  const [selectedSort, setSelectedSort] = useState<SortParams>();
 
   function handleTotalReached(dataLength?: number) {
     if (dataLength && dataLength < ITEMS_PER_PAGE) {
@@ -55,6 +59,8 @@ function Home() {
     const {data, error} = await fetchProducts({
       page: currentPage + 1,
       search,
+      category: selectedCategory,
+      sort: selectedSort,
     });
 
     if (data) {
@@ -68,37 +74,98 @@ function Home() {
     }
 
     handleTotalReached(data?.length);
-  }, [currentPage, loading, loadingMore, hasReachedTotal, search]);
+  }, [
+    currentPage,
+    loading,
+    loadingMore,
+    hasReachedTotal,
+    search,
+    selectedCategory,
+    selectedSort,
+  ]);
 
-  async function getInitialProducts() {
+  async function getInitialData() {
     setCurrentPage(1);
     setHasReachedTotal(false);
 
-    const {data, error} = await fetchProducts({});
+    const {data: productsData, error: productsError} = await fetchProducts({});
+    const {data: categoriesData, error: categoriesError} =
+      await fetchProductCategories();
+
+    if (productsData) {
+      setProducts(productsData);
+    }
+
+    if (categoriesData) {
+      setCategories(categoriesData);
+    }
+
+    const error = productsError || categoriesError;
+
+    if (error) {
+      handleRequestError(error);
+    }
+
+    setLoading(false);
+  }
+
+  async function handleSearch(value: string) {
+    setSearch(value);
+    setCurrentPage(1);
+    setSelectedCategory(undefined);
+
+    if (value.length === 0) {
+      return getInitialData();
+    }
+
+    debounceSearch(value);
+  }
+
+  async function handleSelectCategory(category: string) {
+    setLoading(true);
+    setSelectedCategory(category);
+    setCurrentPage(1);
+    setSearch('');
+
+    const {data, error} = await fetchProducts({category});
 
     if (data) {
-      setLoading(false);
       setProducts(data);
     }
 
     if (error) {
       return handleRequestError(error);
     }
+
+    handleTotalReached(data?.length);
+
+    setLoading(false);
   }
 
-  async function handleSearch(value: string) {
-    setSearch(value);
+  function handleRemoveFilters() {
+    getInitialData();
+    setSelectedCategory(undefined);
+  }
+
+  async function handleSelectSort(sort: SortParams) {
+    setSelectedSort(sort);
     setCurrentPage(1);
 
-    if (value.length === 0) {
-      return getInitialProducts();
+    const {data, error} = await fetchProducts({sort, search});
+
+    if (data) {
+      setProducts(data);
     }
 
-    debounceSearch(value);
+    if (error) {
+      return handleRequestError(error);
+    }
+
+    handleTotalReached(data?.length);
   }
 
   useEffect(() => {
-    getInitialProducts();
+    getInitialData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -111,6 +178,11 @@ function Home() {
       search={search}
       onSearch={handleSearch}
       error={errorMessage}
+      categories={categories}
+      selectedCategory={selectedCategory}
+      onPressCategory={handleSelectCategory}
+      onRemoveFilters={handleRemoveFilters}
+      selectedSort={selectedSort}
     />
   );
 }
