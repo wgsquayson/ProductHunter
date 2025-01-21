@@ -2,6 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import Template from './template';
 import {fetchProducts} from './service';
 import {ProductListItem} from './model';
+import {useDebouncedCallback} from 'use-debounce';
 
 function Home() {
   const [products, setProducts] = useState<ProductListItem[]>([]);
@@ -12,18 +13,30 @@ function Home() {
 
   const [search, setSearch] = useState('');
 
-  async function getProducts() {
+  function handleTotalReached() {
+    setLoadingMore(false);
+    setHasReachedTotal(true);
+  }
+
+  const debounceSearch = useDebouncedCallback(async (value: string) => {
+    const {data, total} = await fetchProducts({search: value});
+
+    if (data) {
+      setProducts(data);
+    }
+
+    if (total && products.length >= total) {
+      handleTotalReached();
+    }
+  }, 500);
+
+  async function getInitialProducts() {
     const {data} = await fetchProducts({});
 
     if (data) {
       setLoading(false);
       return setProducts(data);
     }
-  }
-
-  function handleTotalReached() {
-    setLoadingMore(false);
-    setHasReachedTotal(true);
   }
 
   const loadMoreProducts = useCallback(async () => {
@@ -53,27 +66,24 @@ function Home() {
     search,
   ]);
 
+  function handleClearSearch() {
+    setCurrentPage(1);
+    setHasReachedTotal(false);
+  }
+
   async function handleSearch(value: string) {
     setSearch(value);
 
-    if (value.length <= 3) {
-      return;
+    if (value.length === 0) {
+      return handleClearSearch();
     }
 
-    const {data, total} = await fetchProducts({search: value});
-
-    if (data) {
-      setProducts(data);
-    }
-
-    if (total && products.length >= total) {
-      handleTotalReached();
-    }
+    debounceSearch(value);
   }
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    getInitialProducts();
+  }, [search]);
 
   return (
     <Template
