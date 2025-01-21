@@ -14,10 +14,15 @@ export type FooterProps = {
   isLoadingMore: boolean;
 };
 
+export type EmptyListProps = {
+  loading: boolean;
+  error?: string;
+};
+
 export type TemplateProps = HeaderProps &
-  FooterProps & {
+  FooterProps &
+  EmptyListProps & {
     products: ProductListItem[];
-    loading: boolean;
     onEndReached: () => void;
   };
 

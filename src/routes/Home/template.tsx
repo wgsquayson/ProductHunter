@@ -6,11 +6,13 @@ import ProductListItemComponent from './components/ProductListItem';
 import Separator from './components/Separator';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import EmptyList from './components/EmptyList';
 
 export default function ({
   products,
   onEndReached,
   loading,
+  error,
   isLoadingMore,
   search,
   onSearch,
@@ -23,6 +25,7 @@ export default function ({
         ListHeaderComponent={<Header search={search} onSearch={onSearch} />}
         ItemSeparatorComponent={Separator}
         ListFooterComponent={Footer({isLoadingMore})}
+        ListEmptyComponent={<EmptyList loading={loading} error={error} />}
         showsVerticalScrollIndicator={false}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.3}
