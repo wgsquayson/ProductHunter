@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import EmptyList from './components/EmptyList';
 import CategoriesList from './components/CategoriesList';
+import SortOptionsList from './components/SortOptionsList';
 
 export default function ({
   products,
@@ -21,7 +22,8 @@ export default function ({
   selectedSort,
   categories,
   onPressCategory,
-  onRemoveFilters,
+  onPressSort,
+  onClearFilters,
 }: TemplateProps) {
   return (
     <>
@@ -35,6 +37,7 @@ export default function ({
               onSearch={onSearch}
               selectedCategory={selectedCategory}
               selectedSort={selectedSort}
+              onClearFilters={onClearFilters}
             />
           }
           ItemSeparatorComponent={Separator}
@@ -49,8 +52,8 @@ export default function ({
       <CategoriesList
         categories={categories}
         onPressCategory={onPressCategory}
-        onRemoveFilters={onRemoveFilters}
       />
+      <SortOptionsList onPressSort={onPressSort} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-export type CategoriesListEvents = {
+export type ModalEvents = {
   openModal: undefined;
   closeModal: undefined;
 };

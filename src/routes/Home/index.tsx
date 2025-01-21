@@ -29,6 +29,7 @@ function Home() {
   function handleRequestError(error: string) {
     setProducts([]);
     setErrorMessage(error);
+    setHasReachedTotal(true);
   }
 
   const debounceSearch = useDebouncedCallback(async (value: string) => {
@@ -84,11 +85,18 @@ function Home() {
     selectedSort,
   ]);
 
-  async function getInitialData() {
+  async function getInitialData(withFilters = true) {
     setCurrentPage(1);
     setHasReachedTotal(false);
 
-    const {data: productsData, error: productsError} = await fetchProducts({});
+    const {data: productsData, error: productsError} = await fetchProducts(
+      withFilters
+        ? {
+            sort: selectedSort,
+            category: selectedCategory,
+          }
+        : {},
+    );
     const {data: categoriesData, error: categoriesError} =
       await fetchProductCategories();
 
@@ -127,7 +135,7 @@ function Home() {
     setCurrentPage(1);
     setSearch('');
 
-    const {data, error} = await fetchProducts({category});
+    const {data, error} = await fetchProducts({category, sort: selectedSort});
 
     if (data) {
       setProducts(data);
@@ -143,15 +151,20 @@ function Home() {
   }
 
   function handleRemoveFilters() {
-    getInitialData();
+    setSelectedSort(undefined);
     setSelectedCategory(undefined);
+    getInitialData(false);
   }
 
   async function handleSelectSort(sort: SortParams) {
     setSelectedSort(sort);
     setCurrentPage(1);
 
-    const {data, error} = await fetchProducts({sort, search});
+    const {data, error} = await fetchProducts({
+      sort,
+      search,
+      category: selectedCategory,
+    });
 
     if (data) {
       setProducts(data);
@@ -181,8 +194,9 @@ function Home() {
       categories={categories}
       selectedCategory={selectedCategory}
       onPressCategory={handleSelectCategory}
-      onRemoveFilters={handleRemoveFilters}
       selectedSort={selectedSort}
+      onPressSort={handleSelectSort}
+      onClearFilters={handleRemoveFilters}
     />
   );
 }

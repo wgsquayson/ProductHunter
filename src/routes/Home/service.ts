@@ -14,15 +14,12 @@ export async function fetchProducts({
 
   const skip = (page - 1) * ITEMS_PER_PAGE;
   const commonQueryParams = `select=title,price,thumbnail,id&limit=${ITEMS_PER_PAGE}&skip=${skip}`;
-  const sortQueryParams = sort
-    ? `&sortBy=${sort.by}&order={${sort.order}}`
-    : '';
+  const sortQueryParams = sort ? `&sortBy=${sort.by}&order=${sort.order}` : '';
   const prefix = getUrlPrefix(search, category);
+  const route = `${prefix}${commonQueryParams}${sortQueryParams}`;
 
   try {
-    const response = await api.get(
-      `${prefix}${commonQueryParams}${sortQueryParams}`,
-    );
+    const response = await api.get(route);
 
     result.data = response.data.products;
   } catch (err) {

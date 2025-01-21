@@ -6,12 +6,14 @@ import {Button, Spacer} from '../../../../ui/components';
 import {HeaderProps} from '../../model';
 import {getCategoryName, getSortButtonProps} from './utils';
 import {categoriesListEmitter} from '../CategoriesList/utils';
+import {sortListEmitter} from '../SortOptionsList/utils';
 
 export default function Header({
   search,
   onSearch,
   selectedCategory,
   selectedSort,
+  onClearFilters,
 }: HeaderProps) {
   const styles = useStyle(theme => ({
     inputContainer: {
@@ -38,6 +40,12 @@ export default function Header({
     categoriesListEmitter.emit('openModal');
   }
 
+  function onPressSort() {
+    sortListEmitter.emit('openModal');
+  }
+
+  const hasFilters = selectedCategory || selectedSort;
+
   return (
     <>
       <View style={styles.inputContainer}>
@@ -61,9 +69,15 @@ export default function Header({
           icon="filter"
           onPress={onPressCategory}
         />
-        <Button {...getSortButtonProps(selectedSort)} />
+        <Button {...getSortButtonProps(selectedSort)} onPress={onPressSort} />
       </View>
       <Spacer size="sml" />
+      {hasFilters ? (
+        <>
+          <Button text="Clear filters" icon="close" onPress={onClearFilters} />
+          <Spacer size="sml" />
+        </>
+      ) : null}
     </>
   );
 }

@@ -1,33 +1,33 @@
 import {ButtonProps} from '../../../../ui/components/';
 import {SortParams} from '../../model';
 
-export function getSortButtonProps(sort?: SortParams): ButtonProps {
-  const sortMap: Record<
-    SortParams['by'],
-    Record<SortParams['order'], ButtonProps>
-  > = {
-    price: {
-      asc: {
-        text: 'Higher price',
-        icon: 'sort-up',
-      },
-      desc: {
-        text: 'Lower price',
-        icon: 'sort-down',
-      },
+export const sortMap: Record<
+  SortParams['by'],
+  Record<SortParams['order'], ButtonProps>
+> = {
+  price: {
+    desc: {
+      text: 'Higher price',
+      icon: 'sort-up',
     },
-    rating: {
-      asc: {
-        text: 'Higher rating',
-        icon: 'sort-up',
-      },
-      desc: {
-        text: 'Lower rating',
-        icon: 'sort-down',
-      },
+    asc: {
+      text: 'Lower price',
+      icon: 'sort-down',
     },
-  };
+  },
+  rating: {
+    desc: {
+      text: 'Higher rating',
+      icon: 'sort-up',
+    },
+    asc: {
+      text: 'Lower rating',
+      icon: 'sort-down',
+    },
+  },
+};
 
+export function getSortButtonProps(sort?: SortParams): ButtonProps {
   if (sort) {
     return sortMap[sort.by][sort.order];
   }

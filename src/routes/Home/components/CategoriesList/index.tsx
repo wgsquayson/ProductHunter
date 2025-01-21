@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
-import {addExcludeFilter, categoriesListEmitter} from './utils';
+import {categoriesListEmitter} from './utils';
 import {CategoriesListProps} from '../../model';
 import {Button, Modal, Spacer} from '../../../../ui/components';
 import {formatCategory} from '../Header/utils';
@@ -8,7 +8,6 @@ import {formatCategory} from '../Header/utils';
 export default function CategoriesList({
   categories,
   onPressCategory,
-  onRemoveFilters,
 }: CategoriesListProps) {
   const [visible, setVisible] = useState(false);
 
@@ -17,10 +16,6 @@ export default function CategoriesList({
 
   function _onPressCategory(category: string) {
     closeModal();
-
-    if (category === 'Remove filters') {
-      return onRemoveFilters();
-    }
 
     onPressCategory(category);
   }
@@ -38,7 +33,7 @@ export default function CategoriesList({
   return (
     <Modal title="Select a filter" onClose={closeModal} visible={visible}>
       <FlatList
-        data={addExcludeFilter(categories)}
+        data={categories}
         keyExtractor={item => item}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <Spacer size="xs" />}

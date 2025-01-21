@@ -10,6 +10,7 @@ export type HeaderProps = {
   onSearch: (value: string) => void;
   selectedCategory?: string;
   selectedSort?: SortParams;
+  onClearFilters: () => void;
 };
 
 export type FooterProps = {
@@ -24,13 +25,17 @@ export type EmptyListProps = {
 export type CategoriesListProps = {
   categories: string[];
   onPressCategory: (category: string) => void;
-  onRemoveFilters: () => void;
+};
+
+export type SortOptionsListProps = {
+  onPressSort: (sort: SortParams) => void;
 };
 
 export type TemplateProps = HeaderProps &
   FooterProps &
   EmptyListProps &
-  CategoriesListProps & {
+  CategoriesListProps &
+  SortOptionsListProps & {
     products: ProductListItem[];
     onEndReached: () => void;
   };

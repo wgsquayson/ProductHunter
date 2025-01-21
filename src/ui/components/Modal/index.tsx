@@ -19,7 +19,7 @@ export default function Modal({
       backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
     content: {
-      height: '60%',
+      maxHeight: '60%',
       padding: theme.spacing.sml,
       backgroundColor: theme.color.background.primary,
       borderRadius: theme.borderRadius.xl,
