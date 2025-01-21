@@ -1,7 +1,7 @@
 import {FetchResponse} from '../../models/fetch';
 import api from '../../service/api';
 import {ITEMS_PER_PAGE} from './constants';
-import {FetchProductsProps, ProductListItem} from './model';
+import {FetchProductsParams, ProductListItem} from './model';
 
 function getUrlPrefix(search?: string, category?: string) {
   if (search) {
@@ -20,7 +20,7 @@ export async function fetchProducts({
   search = '',
   sort,
   category,
-}: FetchProductsProps): Promise<FetchResponse<ProductListItem[]>> {
+}: FetchProductsParams): Promise<FetchResponse<ProductListItem[]>> {
   let result: FetchResponse<ProductListItem[]> = {};
 
   const skip = (page - 1) * ITEMS_PER_PAGE;

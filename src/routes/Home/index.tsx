@@ -1,183 +1,71 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Template from './template';
-import {fetchProductCategories, fetchProducts} from './service';
-import {ProductListItem, SortParams} from './model';
-import {useDebouncedCallback} from 'use-debounce';
-import {ITEMS_PER_PAGE} from './constants';
+
+import useProductSearch from './hooks/useProductSearch';
+import useProductFilter from './hooks/useProductFilter';
+import useProductSort from './hooks/useProductSort';
+import useHomeState from './hooks/useHomeState';
 
 function Home() {
-  const [products, setProducts] = useState<ProductListItem[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [hasReachedTotal, setHasReachedTotal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [search, setSearch] = useState('');
+  const {
+    state,
+    updateState,
+    getInitialData,
+    handleTotalReached,
+    loadMoreProducts,
+  } = useHomeState(() => {});
 
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>();
-  const [selectedSort, setSelectedSort] = useState<SortParams>();
+  function resetPage() {
+    updateState({currentPage: 1});
+  }
 
-  function handleTotalReached(dataLength?: number) {
-    if (dataLength && dataLength < ITEMS_PER_PAGE) {
-      setLoadingMore(false);
-      setHasReachedTotal(true);
-    }
+  function setupProductFilter() {
+    resetPage();
+    resetSearch();
+  }
+
+  function setupProductSearch() {
+    resetPage();
+    resetCategory();
   }
 
   function handleRequestError(error: string) {
-    setProducts([]);
+    updateState({products: [], hasReachedTotal: true});
+
     setErrorMessage(error);
-    setHasReachedTotal(true);
   }
 
-  const debounceSearch = useDebouncedCallback(async (value: string) => {
-    if (value.length < 3) {
-      return;
-    }
+  const {selectedSort, handleSelectSort, resetSort} = useProductSort({
+    onSort: resetPage,
+    onSuccess: products => updateState({products}),
+    onError: handleRequestError,
+    onTotalReached: handleTotalReached,
+  });
 
-    const {data, error} = await fetchProducts({
-      search: value,
-      sort: selectedSort,
-    });
-
-    if (data) {
-      setProducts(data);
-    }
-
-    if (error) {
-      return handleRequestError(error);
-    }
-
-    handleTotalReached(data?.length);
-  }, 500);
-
-  const loadMoreProducts = useCallback(async () => {
-    if (loading || loadingMore || hasReachedTotal) {
-      return;
-    }
-
-    setLoadingMore(true);
-
-    const {data, error} = await fetchProducts({
-      page: currentPage + 1,
-      search,
-      category: selectedCategory,
-      sort: selectedSort,
-    });
-
-    if (data) {
-      setCurrentPage(prev => (prev += 1));
-      setLoadingMore(false);
-      setProducts(prev => [...prev, ...data]);
-    }
-
-    if (error) {
-      return handleRequestError(error);
-    }
-
-    handleTotalReached(data?.length);
-  }, [
-    currentPage,
-    loading,
-    loadingMore,
-    hasReachedTotal,
-    search,
-    selectedCategory,
+  const {search, handleSearch, resetSearch} = useProductSearch({
     selectedSort,
-  ]);
+    onError: handleRequestError,
+    onTotalReached: handleTotalReached,
+    getInitialData,
+    onSearch: setupProductSearch,
+    onSuccess: products => updateState({products}),
+  });
 
-  async function getInitialData(withFilters = true) {
-    setCurrentPage(1);
-    setHasReachedTotal(false);
-
-    const {data: productsData, error: productsError} = await fetchProducts(
-      withFilters
-        ? {
-            sort: selectedSort,
-            category: selectedCategory,
-          }
-        : {},
-    );
-    const {data: categoriesData, error: categoriesError} =
-      await fetchProductCategories();
-
-    if (productsData) {
-      setProducts(productsData);
-    }
-
-    if (categoriesData) {
-      setCategories(categoriesData);
-    }
-
-    const error = productsError || categoriesError;
-
-    if (error) {
-      handleRequestError(error);
-    }
-
-    setLoading(false);
-  }
-
-  async function handleSearch(value: string) {
-    setSearch(value);
-    setCurrentPage(1);
-    setSelectedCategory(undefined);
-
-    if (value.length === 0) {
-      return getInitialData();
-    }
-
-    debounceSearch(value);
-  }
-
-  async function handleSelectCategory(category: string) {
-    setLoading(true);
-    setSelectedCategory(category);
-    setCurrentPage(1);
-    setSearch('');
-
-    const {data, error} = await fetchProducts({category, sort: selectedSort});
-
-    if (data) {
-      setProducts(data);
-    }
-
-    if (error) {
-      return handleRequestError(error);
-    }
-
-    handleTotalReached(data?.length);
-
-    setLoading(false);
-  }
+  const {selectedCategory, handleSelectCategory, resetCategory} =
+    useProductFilter({
+      selectedSort,
+      onFilter: setupProductFilter,
+      onSuccess: products => updateState({products}),
+      onError: handleRequestError,
+      onTotalReached: handleTotalReached,
+    });
 
   function handleRemoveFilters() {
-    setSelectedSort(undefined);
-    setSelectedCategory(undefined);
-    getInitialData(false);
-  }
-
-  async function handleSelectSort(sort: SortParams) {
-    setSelectedSort(sort);
-    setCurrentPage(1);
-
-    const {data, error} = await fetchProducts({
-      sort,
-      search,
-      category: selectedCategory,
-    });
-
-    if (data) {
-      setProducts(data);
-    }
-
-    if (error) {
-      return handleRequestError(error);
-    }
-
-    handleTotalReached(data?.length);
+    resetSort();
+    resetCategory();
+    getInitialData();
   }
 
   useEffect(() => {
@@ -187,18 +75,26 @@ function Home() {
 
   return (
     <Template
-      products={products}
-      loading={loading}
-      isLoadingMore={loadingMore}
-      onEndReached={loadMoreProducts}
+      products={state.products}
+      loading={state.loading}
+      isLoadingMore={state.loadingMore}
+      onEndReached={() =>
+        loadMoreProducts({
+          category: selectedCategory,
+          search,
+          sort: selectedSort,
+        })
+      }
       search={search}
       onSearch={handleSearch}
       error={errorMessage}
-      categories={categories}
+      categories={state.categories}
       selectedCategory={selectedCategory}
       onPressCategory={handleSelectCategory}
       selectedSort={selectedSort}
-      onPressSort={handleSelectSort}
+      onPressSort={sort =>
+        handleSelectSort({search, category: selectedCategory, sort})
+      }
       onClearFilters={handleRemoveFilters}
     />
   );

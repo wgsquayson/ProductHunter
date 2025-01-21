@@ -45,7 +45,7 @@ export type SortParams = {
   order: 'asc' | 'desc';
 };
 
-export type FetchProductsProps = {
+export type FetchProductsParams = {
   page?: number;
   search?: string;
   sort?: SortParams;
