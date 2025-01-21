@@ -7,4 +7,11 @@ export type ProductListItem = Pick<
 
 export type TemplateProps = {
   products: ProductListItem[];
+  loading: boolean;
+  loadingMore: boolean;
+  onEndReached: () => void;
+};
+
+export type FetchProductsProps = {
+  page?: number;
 };
