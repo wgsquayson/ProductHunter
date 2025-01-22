@@ -1,14 +1,10 @@
-import {
-  Image,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
-} from 'react-native';
+import {TouchableOpacity, TouchableOpacityProps, View} from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome';
 import {Text} from '@ui/components';
 import {useStyle} from '@ui/hooks';
 import formatCurrency from '@utils/formatCurrency';
 import {ProductListItem} from '../../service/model';
+import FastImage from 'react-native-fast-image';
 
 export default function ProductListItemComponent({
   thumbnail,
@@ -42,7 +38,7 @@ export default function ProductListItemComponent({
   return (
     <TouchableOpacity style={styles.product} {...props}>
       <View style={styles.productInfo}>
-        <Image
+        <FastImage
           source={{
             uri: thumbnail,
           }}
