@@ -18,6 +18,7 @@ The toolkit used to build this app was
 - [use-debounce](https://www.npmjs.com/package/use-debounce) - to debounce the search and avoid unecessary multiple api calls
 - [mitt](https://www.npmjs.com/package/mitt) - for emitting events
 - [axios](https://www.npmjs.com/package/axios) - for api calls
+- [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) - for icons
 
 ### Some disclaimers
 
