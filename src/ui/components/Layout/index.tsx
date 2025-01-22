@@ -22,13 +22,23 @@ function Layout({header, children}: LayoutProps) {
     },
   }));
 
-  const showBackButton = header.canGoBack && navigation.canGoBack();
+  function returnToHome() {
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: 'Home',
+        },
+      ],
+    });
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        {showBackButton ? (
-          <TouchableOpacity onPress={navigation.goBack}>
+        {header.canGoBack ? (
+          <TouchableOpacity
+            onPress={navigation.canGoBack() ? navigation.goBack : returnToHome}>
             <Icon name="arrow-left" size={styles.theme.fontSizes.md} />
           </TouchableOpacity>
         ) : null}
