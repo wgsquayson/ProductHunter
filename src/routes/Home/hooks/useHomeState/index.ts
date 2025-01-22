@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 import {fetchProductCategories, fetchProducts} from '../../service';
 import {ITEMS_PER_PAGE} from '../../constants';
 import {HomeState} from './model';
@@ -19,77 +19,73 @@ export default function useHomeState() {
     setState(prev => ({...prev, ...newState}));
   }
 
-  const handleTotalReached = useCallback((dataLength?: number) => {
+  async function handleTotalReached(dataLength?: number) {
     if (typeof dataLength === 'number' && dataLength < ITEMS_PER_PAGE) {
       updateState({loadingMore: false, hasReachedTotal: true});
     }
-  }, []);
+  }
 
-  const handleRequestError = useCallback((error: string) => {
+  async function handleRequestError(error: string) {
     updateState({products: [], hasReachedTotal: true, errorMessage: error});
-  }, []);
+  }
 
-  const getInitialData = useCallback(
-    async (filters?: Pick<FetchProductsParams, 'sort' | 'category'>) => {
-      updateState({currentPage: 1, hasReachedTotal: false});
+  async function getInitialData(
+    filters?: Pick<FetchProductsParams, 'sort' | 'category'>,
+  ) {
+    updateState({currentPage: 1, hasReachedTotal: false});
 
-      const [productsResult, categoriesResult] = await Promise.all([
-        fetchProducts(filters ?? {}),
-        fetchProductCategories(),
-      ]);
+    const [productsResult, categoriesResult] = await Promise.all([
+      fetchProducts(filters ?? {}),
+      fetchProductCategories(),
+    ]);
 
-      if (productsResult.data) {
-        updateState({products: productsResult.data});
-      }
+    if (productsResult.data) {
+      updateState({products: productsResult.data});
+    }
 
-      if (categoriesResult.data) {
-        updateState({categories: categoriesResult.data});
-      }
+    if (categoriesResult.data) {
+      updateState({categories: categoriesResult.data});
+    }
 
-      const error = productsResult.error || categoriesResult.error;
+    const error = productsResult.error || categoriesResult.error;
 
-      if (error) {
-        handleRequestError(error);
-      }
+    if (error) {
+      handleRequestError(error);
+    }
 
-      updateState({loading: false});
-    },
-    [handleRequestError],
-  );
+    updateState({loading: false});
+  }
 
-  const loadMoreProducts = useCallback(
-    async (filters?: Omit<FetchProductsParams, 'page'>) => {
-      const {loading, loadingMore, hasReachedTotal} = state;
+  async function loadMoreProducts(filters?: Omit<FetchProductsParams, 'page'>) {
+    const {loading, loadingMore, hasReachedTotal} = state;
 
-      if (loading || loadingMore || hasReachedTotal) {
-        return;
-      }
+    if (loading || loadingMore || hasReachedTotal) {
+      return;
+    }
 
-      updateState({loadingMore: true});
+    updateState({loadingMore: true});
 
-      const {data, error} = await fetchProducts({
-        ...filters,
-        page: state.currentPage + 1,
-      });
+    const {data, error} = await fetchProducts({
+      ...filters,
+      page: state.currentPage + 1,
+    });
 
-      if (data) {
-        setState(prev => ({
-          ...prev,
-          products: [...prev.products, ...data],
-          currentPage: prev.currentPage + 1,
-          loadingMore: false,
-        }));
-      }
+    if (data) {
+      setState(prev => ({
+        ...prev,
+        products: [...prev.products, ...data],
+        currentPage: prev.currentPage + 1,
+        loadingMore: false,
+      }));
+    }
 
-      if (error) {
-        handleRequestError(error);
-        updateState({loadingMore: false});
-      }
+    if (error) {
+      handleRequestError(error);
+      updateState({loadingMore: false});
+    }
 
-      handleTotalReached(data?.length);
-    },
-    [handleRequestError, handleTotalReached, state],
-  );
+    handleTotalReached(data?.length);
+  }
 
   useOnce(() => {
     getInitialData();
