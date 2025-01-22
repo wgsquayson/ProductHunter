@@ -1,5 +1,6 @@
 import {
   createStaticNavigation,
+  LinkingOptions,
   StaticParamList,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,19 +13,34 @@ const RootStack = createNativeStackNavigator({
   },
   initialRouteName: 'Home',
   screens: {
-    Home,
-    ProductDetails,
+    Home: {
+      screen: Home,
+      linking: {
+        path: 'home',
+      },
+    },
+    ProductDetails: {
+      screen: ProductDetails,
+      linking: {
+        path: 'productDetails/:productId',
+      },
+    },
   },
 });
 
 type RootStackParamList = StaticParamList<typeof RootStack>;
+
+export const linking: LinkingOptions<RootStackParamList> = {
+  enabled: true,
+  prefixes: ['producthunter://'],
+};
+
+const Routes = createStaticNavigation(RootStack);
+
+export default Routes;
 
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamList {}
   }
 }
-
-const Routes = createStaticNavigation(RootStack);
-
-export default Routes;

@@ -1,10 +1,10 @@
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import Routes from './src/routes';
+import Routes, {linking} from './src/routes';
 
 function App() {
   return (
     <SafeAreaProvider>
-      <Routes />
+      <Routes linking={linking} />
     </SafeAreaProvider>
   );
 }
