@@ -22,8 +22,8 @@ The toolkit used to build this app was
 
 ### Some disclaimers
 
-- Unfortunately, due to api limitations, it is not possible to search and filter products simultaneosly, and the app prevents this behavior
-- Push notifications, even though it is set up for both platforms, only work on android because I don't have an paid Apple Developer Account
+- Unfortunately, due to api limitations, it is not possible to search and filter products simultaneously, and the app prevents this behavior. It is possible to sort both of them, though.
+- Push notifications, even though it is set up for both platforms, only work on android because I don't have a paid Apple Developer Account
 
 ### How to build and run the project
 
@@ -41,9 +41,9 @@ The toolkit used to build this app was
   - run the command `npx uri-scheme open "producthunter://" --platform`, where `platform` must be replaced with `ios` or `android`.
   - For example: `npx uri-scheme open "producthunter://" --ios`
 - to open a specific product,
-  - get an product id on the [api page](https://dummyjson.com/docs/products#products-all) (click on "Show Output" to see some products in the "Get all products" section),
+  - get an product id on the [api page](https://dummyjson.com/docs/products#products-all) (click on "Show Output" to see some products in the "Get all products" section)
   - and run the command `npx uri-scheme open "producthunter://productDetails/id" --platform`, with `id` being the id of the product you picked and again with platform being either `ios` or `android`.
-  - For example `npx uri-scheme open "producthunter://productDetails/1" --ios`
+  - For example: `npx uri-scheme open "producthunter://productDetails/1" --ios`
 
 ### How to test push notifications
 
