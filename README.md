@@ -37,8 +37,13 @@ The toolkit used to build this app was
 
 ### How to test deep linking
 
-- to open the homescreen, run the command `npx uri-scheme open "producthunter://" --platform`, where `platform` must be replaced with `ios` or `android`, for example: `npx uri-scheme open "producthunter://" --ios`
-- to open a specific product, get an product id on the [api page](https://dummyjson.com/docs/products#products-all) (click on "Show Output" to see some products in the "Get all products" section), and run the command `npx uri-scheme open "producthunter://productDetails/id" --platform`, with `id` being the id of the product you picked and again with platform being either `ios` or `android`. For example `npx uri-scheme open "producthunter://productDetails/1" --ios`
+- to open the homescreen
+  - run the command `npx uri-scheme open "producthunter://" --platform`, where `platform` must be replaced with `ios` or `android`.
+  - For example: `npx uri-scheme open "producthunter://" --ios`
+- to open a specific product,
+  - get an product id on the [api page](https://dummyjson.com/docs/products#products-all) (click on "Show Output" to see some products in the "Get all products" section),
+  - and run the command `npx uri-scheme open "producthunter://productDetails/id" --platform`, with `id` being the id of the product you picked and again with platform being either `ios` or `android`.
+  - For example `npx uri-scheme open "producthunter://productDetails/1" --ios`
 
 ### How to test push notifications
 
