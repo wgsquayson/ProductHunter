@@ -5,8 +5,9 @@ import {useStyle} from '@ui/hooks';
 import formatCurrency from '@utils/formatCurrency';
 import {ProductListItem} from '../../service/model';
 import FastImage from 'react-native-fast-image';
+import React from 'react';
 
-export default function ProductListItemComponent({
+function ProductListItemComponent({
   thumbnail,
   title,
   price,
@@ -68,3 +69,5 @@ export default function ProductListItemComponent({
     </TouchableOpacity>
   );
 }
+
+export default React.memo(ProductListItemComponent);
