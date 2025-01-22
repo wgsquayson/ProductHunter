@@ -4008,7 +4008,7 @@ internal-slot@^1.1.0:
     hasown "^2.0.2"
     side-channel "^1.1.0"
 
-invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -5792,6 +5792,13 @@ react-native-fast-image@^8.6.3:
   version "8.6.3"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz#6edc3f9190092a909d636d93eecbcc54a8822255"
   integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
+
+react-native-onesignal@^5.2.8:
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-5.2.8.tgz#7ea1dd3ae5af7bc157455d1f6153ec24e728006c"
+  integrity sha512-NZ0bq/z7Cjzb+mb/YJSC4atJ6S2yOGANkwzTQwUBAaMvhNuGzWJfWsj/gfhyS0AFTQScJV6Tsj1cR5nz2SEd3A==
+  dependencies:
+    invariant "^2.2.2"
 
 react-native-safe-area-context@^5.1.0:
   version "5.1.0"
