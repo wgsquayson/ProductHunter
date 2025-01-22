@@ -6,5 +6,7 @@ export type ProductDetailsProps = StaticScreenProps<{
 }>;
 
 export type TemplateProps = {
-  product: Product;
+  product?: Product;
+  errorMessage?: string;
+  loading: boolean;
 };
