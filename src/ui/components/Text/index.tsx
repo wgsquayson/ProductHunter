@@ -12,7 +12,7 @@ function Text({
     default: {
       color,
       fontSize: theme.fontSizes.sml,
-      lineHeight: theme.fontSizes.sml * 1.7,
+      lineHeight: theme.fontSizes.sml * 1.5,
     },
     bold: {
       color,

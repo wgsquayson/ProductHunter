@@ -1,6 +1,6 @@
 import {TouchableOpacity, TouchableOpacityProps, View} from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome';
-import {Text} from '@ui/components';
+import {Spacer, Text} from '@ui/components';
 import {useStyle} from '@ui/hooks';
 import formatCurrency from '@utils/formatCurrency';
 import {ProductListItem} from '../../service/model';
@@ -10,6 +10,7 @@ export default function ProductListItemComponent({
   thumbnail,
   title,
   price,
+  rating,
   ...props
 }: Omit<ProductListItem, 'id'> & TouchableOpacityProps) {
   const styles = useStyle(theme => ({
@@ -30,8 +31,13 @@ export default function ProductListItemComponent({
     },
     productThumbnail: {width: 60, height: 60},
     shrink: {
-      flex: 1,
+      flexShrink: 1,
       maxWidth: '70%',
+    },
+    row: {
+      flexDirection: 'row',
+      gap: theme.spacing.xxxs,
+      alignItems: 'center',
     },
   }));
 
@@ -49,7 +55,13 @@ export default function ProductListItemComponent({
           <Text numberOfLines={2} ellipsizeMode="tail">
             {title}
           </Text>
+          <Spacer size="xxxs" />
           <Text variant="highlight">{formatCurrency(price)}</Text>
+          <Spacer size="xxs" />
+          <View style={styles.row}>
+            <Icon name="star" />
+            <Text variant="detail">{rating}</Text>
+          </View>
         </View>
       </View>
       <Icon name="chevron-right" size={styles.theme.fontSizes.md} />

@@ -52,6 +52,7 @@ export default function ({
               price={item.price}
               thumbnail={item.thumbnail}
               title={item.title}
+              rating={item.rating}
               onPress={() => onPressProduct(item.id)}
             />
           )}

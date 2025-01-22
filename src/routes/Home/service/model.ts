@@ -15,4 +15,5 @@ export type ProductListItem = {
   title: string;
   price: number;
   thumbnail: string;
+  rating: string;
 };
