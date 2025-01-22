@@ -1,12 +1,10 @@
-import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
-
 import Template from './template';
-
 import useProductSearch from './hooks/useProductSearch';
 import useProductFilter from './hooks/useProductFilter';
 import useProductSort from './hooks/useProductSort';
 import useHomeState from './hooks/useHomeState';
+import useOnce from '../../hooks/useOnce';
 
 function Home() {
   const navigation = useNavigation();
@@ -74,10 +72,9 @@ function Home() {
       onTotalReached: handleTotalReached,
     });
 
-  useEffect(() => {
+  useOnce(() => {
     getInitialData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <Template
