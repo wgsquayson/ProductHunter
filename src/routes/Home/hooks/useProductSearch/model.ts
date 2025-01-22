@@ -1,4 +1,8 @@
-import {ProductListItem, SortParams} from '../../service/model';
+import {
+  FetchProductsParams,
+  ProductListItem,
+  SortParams,
+} from '../../service/model';
 
 export type UseProductSearchParams = {
   selectedSort?: SortParams;
@@ -6,5 +10,5 @@ export type UseProductSearchParams = {
   onSuccess: (products: ProductListItem[]) => void;
   onError: (message: string) => void;
   onTotalReached: (dataLength?: number) => void;
-  getInitialData: () => void;
+  getInitialData: (filters?: Pick<FetchProductsParams, 'sort'>) => void;
 };

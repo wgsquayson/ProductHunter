@@ -39,7 +39,7 @@ export default function useProductSearch({
     onSearch();
 
     if (value.length === 0) {
-      return getInitialData();
+      return getInitialData({sort: selectedSort});
     }
 
     debounceSearch(value);
