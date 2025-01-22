@@ -16,7 +16,7 @@ export default function ({product}: TemplateProps) {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: theme.spacing.xxs,
+      gap: theme.spacing.xxxs,
       flexWrap: 'wrap',
     },
     productInfo: {
