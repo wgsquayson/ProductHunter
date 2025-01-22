@@ -1,4 +1,4 @@
-import {ProductListItem} from '../../components/ProductListItem/model';
+import {ProductListItem} from '../../service/model';
 
 export type HomeState = {
   products: ProductListItem[];

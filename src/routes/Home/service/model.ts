@@ -9,3 +9,10 @@ export type FetchProductsParams = {
   sort?: SortParams;
   category?: string;
 };
+
+export type ProductListItem = {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+};

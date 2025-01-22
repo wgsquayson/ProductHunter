@@ -1,8 +1,8 @@
 import {FetchResponse} from '../../../models/fetch';
 import api from '../../../service/api';
-import {ProductListItem} from '../components/ProductListItem/model';
+
 import {ITEMS_PER_PAGE} from '../constants';
-import {FetchProductsParams} from './model';
+import {FetchProductsParams, ProductListItem} from './model';
 import {getUrlPrefix} from './utils';
 
 export async function fetchProducts({
