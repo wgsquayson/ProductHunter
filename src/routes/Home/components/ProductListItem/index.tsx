@@ -8,6 +8,7 @@ import {Text} from '../../../../ui/components';
 import Icon from '@react-native-vector-icons/fontawesome';
 import {useStyle} from '../../../../ui/hooks';
 import {ProductListItem} from './model';
+import formatCurrency from '../../../../utils/formatCurrency';
 
 export default function ProductListItemComponent({
   thumbnail,
@@ -52,7 +53,7 @@ export default function ProductListItemComponent({
           <Text numberOfLines={2} ellipsizeMode="tail">
             {title}
           </Text>
-          <Text variant="highlight">USD {price}</Text>
+          <Text variant="highlight">{formatCurrency(price)}</Text>
         </View>
       </View>
       <Icon name="chevron-right" size={styles.theme.fontSizes.md} />

@@ -4,6 +4,7 @@ import {useStyle} from '../../ui/hooks';
 import {TemplateProps} from './model';
 import Tag from './components/Tag';
 import FastImage from 'react-native-fast-image';
+import formatCurrency from '../../utils/formatCurrency';
 
 export default function ({product}: TemplateProps) {
   const styles = useStyle(theme => ({
@@ -44,7 +45,7 @@ export default function ({product}: TemplateProps) {
         <Text color={styles.theme.color.text.detail}>{product.brand}</Text>
         <Spacer size="xxs" />
         <View style={styles.productInfo}>
-          <Text variant="highlight">USD {product.price}</Text>
+          <Text variant="highlight">{formatCurrency(product.price)}</Text>
           <Text variant="highlight">{product.availabilityStatus}</Text>
         </View>
         <Spacer size="sml" />
