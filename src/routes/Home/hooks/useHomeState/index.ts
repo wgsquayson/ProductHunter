@@ -34,21 +34,20 @@ export default function useHomeState() {
   ) {
     updateState({currentPage: 1, hasReachedTotal: false});
 
-    const {data: productsData, error: productsError} = await fetchProducts(
-      filters ?? {},
-    );
-    const {data: categoriesData, error: categoriesError} =
-      await fetchProductCategories();
+    const [productsResult, categoriesResult] = await Promise.all([
+      fetchProducts(filters ?? {}),
+      fetchProductCategories(),
+    ]);
 
-    if (productsData) {
-      updateState({products: productsData});
+    if (productsResult.data) {
+      updateState({products: productsResult.data});
     }
 
-    if (categoriesData) {
-      updateState({categories: categoriesData});
+    if (categoriesResult.data) {
+      updateState({categories: categoriesResult.data});
     }
 
-    const error = productsError || categoriesError;
+    const error = productsResult.error || categoriesResult.error;
 
     if (error) {
       handleRequestError(error);
