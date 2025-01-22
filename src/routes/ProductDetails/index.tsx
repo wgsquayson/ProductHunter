@@ -1,17 +1,12 @@
 import useProductDetailsState from './hooks/useProductDetailsState';
 import {ProductDetailsProps} from './model';
 import Template from './template';
-import useOnce from '../../hooks/useOnce';
 import {Loading, Text} from '../../ui/components';
 
 function ProductDetails({route}: ProductDetailsProps) {
   const {productId} = route.params;
 
-  const {state, getInitialData} = useProductDetailsState(productId);
-
-  useOnce(() => {
-    getInitialData();
-  });
+  const {state} = useProductDetailsState(productId);
 
   if (state.loading) {
     return <Loading />;

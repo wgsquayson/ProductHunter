@@ -4,7 +4,6 @@ import useProductSearch from './hooks/useProductSearch';
 import useProductFilter from './hooks/useProductFilter';
 import useProductSort from './hooks/useProductSort';
 import useHomeState from './hooks/useHomeState';
-import useOnce from '../../hooks/useOnce';
 
 function Home() {
   const navigation = useNavigation();
@@ -71,10 +70,6 @@ function Home() {
       onError: handleRequestError,
       onTotalReached: handleTotalReached,
     });
-
-  useOnce(() => {
-    getInitialData();
-  });
 
   return (
     <Template
