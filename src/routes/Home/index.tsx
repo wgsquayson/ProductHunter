@@ -1,4 +1,6 @@
 import {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+
 import Template from './template';
 
 import useProductSearch from './hooks/useProductSearch';
@@ -7,6 +9,8 @@ import useProductSort from './hooks/useProductSort';
 import useHomeState from './hooks/useHomeState';
 
 function Home() {
+  const navigation = useNavigation();
+
   function resetPage() {
     updateState({currentPage: 1});
   }
@@ -28,6 +32,12 @@ function Home() {
     if (!search) {
       getInitialData();
     }
+  }
+
+  function onPressProduct(productId: number) {
+    navigation.navigate('ProductDetails', {
+      productId,
+    });
   }
 
   const {
@@ -92,6 +102,7 @@ function Home() {
         handleSelectSort({search, category: selectedCategory, sort})
       }
       onClearFilters={handleRemoveFilters}
+      onPressProduct={onPressProduct}
     />
   );
 }

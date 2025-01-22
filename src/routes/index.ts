@@ -1,16 +1,12 @@
-import {createStaticNavigation} from '@react-navigation/native';
+import {
+  createStaticNavigation,
+  StaticParamList,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './Home';
 import ProductDetails from './ProductDetails';
 
-type RootStackProps = {
-  Home: undefined;
-  ProductDetails: {
-    productId: string;
-  };
-};
-
-const RootStack = createNativeStackNavigator<RootStackProps>({
+const RootStack = createNativeStackNavigator({
   screenOptions: {
     headerShown: false,
   },
@@ -20,6 +16,14 @@ const RootStack = createNativeStackNavigator<RootStackProps>({
     ProductDetails,
   },
 });
+
+type RootStackParamList = StaticParamList<typeof RootStack>;
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
 
 const Routes = createStaticNavigation(RootStack);
 

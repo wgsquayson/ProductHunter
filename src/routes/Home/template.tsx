@@ -24,6 +24,7 @@ export default function ({
   onPressCategory,
   onPressSort,
   onClearFilters,
+  onPressProduct,
 }: TemplateProps) {
   return (
     <>
@@ -46,7 +47,14 @@ export default function ({
           showsVerticalScrollIndicator={false}
           onEndReached={onEndReached}
           onEndReachedThreshold={0.3}
-          renderItem={({item}) => <ProductListItemComponent {...item} />}
+          renderItem={({item}) => (
+            <ProductListItemComponent
+              price={item.price}
+              thumbnail={item.thumbnail}
+              title={item.title}
+              onPress={() => onPressProduct(item.id)}
+            />
+          )}
         />
       </Layout>
       <CategoriesList

@@ -1,4 +1,6 @@
-function ProductDetails() {
+import {ProductDetailsProps} from './model';
+
+function ProductDetails({}: ProductDetailsProps) {
   return null;
 }
 

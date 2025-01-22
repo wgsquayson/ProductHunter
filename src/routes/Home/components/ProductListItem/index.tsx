@@ -1,10 +1,20 @@
-import {Image, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+} from 'react-native';
 import {Text} from '../../../../ui/components';
 import Icon from '@react-native-vector-icons/fontawesome';
 import {useStyle} from '../../../../ui/hooks';
 import {ProductListItem} from './model';
 
-export default function ProductListItemComponent(item: ProductListItem) {
+export default function ProductListItemComponent({
+  thumbnail,
+  title,
+  price,
+  ...props
+}: Omit<ProductListItem, 'id'> & TouchableOpacityProps) {
   const styles = useStyle(theme => ({
     product: {
       flexBasis: 0,
@@ -29,20 +39,20 @@ export default function ProductListItemComponent(item: ProductListItem) {
   }));
 
   return (
-    <TouchableOpacity style={styles.product}>
+    <TouchableOpacity style={styles.product} {...props}>
       <View style={styles.productInfo}>
         <Image
           source={{
-            uri: item.thumbnail,
+            uri: thumbnail,
           }}
           style={styles.productThumbnail}
           resizeMode="contain"
         />
         <View style={styles.shrink}>
           <Text numberOfLines={2} ellipsizeMode="tail">
-            {item.title}
+            {title}
           </Text>
-          <Text variant="highlight">USD {item.price}</Text>
+          <Text variant="highlight">USD {price}</Text>
         </View>
       </View>
       <Icon name="chevron-right" size={styles.theme.fontSizes.md} />

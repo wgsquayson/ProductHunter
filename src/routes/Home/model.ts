@@ -12,4 +12,5 @@ export type TemplateProps = HeaderProps &
   SortOptionsListProps & {
     products: ProductListItem[];
     onEndReached: () => void;
+    onPressProduct: (productId: number) => void;
   };
