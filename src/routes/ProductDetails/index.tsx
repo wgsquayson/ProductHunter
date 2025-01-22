@@ -1,7 +1,7 @@
 import useProductDetailsState from './hooks/useProductDetailsState';
 import {ProductDetailsProps} from './model';
 import Template from './template';
-import {Loading, Text} from '@ui/components';
+import {Layout, Loading, Text} from '@ui/components';
 
 function ProductDetails({route}: ProductDetailsProps) {
   const {productId} = route.params;
@@ -16,7 +16,11 @@ function ProductDetails({route}: ProductDetailsProps) {
     return <Template product={state.product} />;
   }
 
-  return <Text>{state.errorMessage}</Text>;
+  return (
+    <Layout header={{title: 'Product details', canGoBack: true}}>
+      <Text>{state.errorMessage}</Text>
+    </Layout>
+  );
 }
 
 export default ProductDetails;

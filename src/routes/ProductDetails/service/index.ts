@@ -1,6 +1,7 @@
 import {FetchResponse} from '@models/fetch';
 import api from '@service/api';
 import {Product} from './model';
+import errorHandler from '@service/api/errorHandler';
 
 export async function fetchProduct(
   productId: number,
@@ -13,9 +14,11 @@ export async function fetchProduct(
     );
 
     result.data = response.data;
-  } catch (error) {
-    result.error =
-      'An error happened while trying to fetch the product. Try again later.';
+  } catch (err) {
+    result.error = errorHandler(
+      err,
+      'An error happened while trying to fetch the product. Try again later.',
+    );
   }
 
   return result;

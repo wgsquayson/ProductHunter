@@ -3,6 +3,7 @@ import api from '@service/api';
 import {ITEMS_PER_PAGE} from '../constants';
 import {FetchProductsParams, ProductListItem} from './model';
 import {getUrlPrefix} from './utils';
+import errorHandler from '@service/api/errorHandler';
 
 export async function fetchProducts({
   page = 1,
@@ -23,8 +24,9 @@ export async function fetchProducts({
 
     result.data = response.data.products;
   } catch (err) {
-    result.error =
-      'An error happened while trying to search your product. Try again later.';
+    result.error = errorHandler(
+      'An error happened while trying to search your product. Try again later.',
+    );
   }
 
   return result;
@@ -40,8 +42,9 @@ export async function fetchProductCategories(): Promise<
 
     result.data = response.data;
   } catch (error) {
-    result.error =
-      'An error happened while trying to search for product categories. Try again later.';
+    result.error = errorHandler(
+      'An error happened while trying to search for product categories. Try again later.',
+    );
   }
 
   return result;
