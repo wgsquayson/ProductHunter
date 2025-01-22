@@ -5,6 +5,8 @@ export default function Loading() {
   const styles = useStyle(() => ({
     container: {
       flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   }));
 
