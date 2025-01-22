@@ -12,6 +12,7 @@ function Text({
     default: {
       color,
       fontSize: theme.fontSizes.sml,
+      lineHeight: theme.fontSizes.sml * 1.7,
     },
     bold: {
       color,
@@ -37,6 +38,11 @@ function Text({
       color,
       fontSize: theme.fontSizes.md,
       fontWeight: 700,
+    },
+    detail: {
+      color,
+      fontSize: theme.fontSizes.xs,
+      fontWeight: 500,
     },
   }));
 

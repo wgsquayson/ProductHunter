@@ -9,7 +9,7 @@ export async function fetchProduct(
 
   try {
     const response = await api.get(
-      `/products/${productId}?select=images,title,description,tags,brand,availabilityStatus`,
+      `/products/${productId}?select=images,title,description,tags,brand,availabilityStatus,price`,
     );
 
     result.data = response.data;

@@ -5,4 +5,5 @@ export type Product = {
   tags: string[];
   brand: string;
   availabilityStatus: string;
+  price: number;
 };

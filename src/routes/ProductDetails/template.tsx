@@ -1,6 +1,56 @@
-import {Layout} from '../../ui/components';
+import {Image, ScrollView, View} from 'react-native';
+import {Layout, Spacer, Text} from '../../ui/components';
+import {useStyle} from '../../ui/hooks';
 import {TemplateProps} from './model';
+import Tag from './components/Tag';
 
-export default function ({}: TemplateProps) {
-  return <Layout header={{title: 'Product details', canGoBack: true}} />;
+export default function ({product}: TemplateProps) {
+  const styles = useStyle(theme => ({
+    image: {
+      width: '100%',
+      height: 300,
+    },
+    tagsContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: theme.spacing.xxs,
+      flexWrap: 'wrap',
+    },
+    productInfo: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+  }));
+
+  return (
+    <Layout header={{title: 'Product details', canGoBack: true}}>
+      <ScrollView>
+        <Image
+          style={styles.image}
+          source={{uri: product.images[0]}}
+          resizeMode="contain"
+        />
+        <Spacer size="xs" />
+        {product.tags.length > 0 ? (
+          <View style={styles.tagsContainer}>
+            {product.tags.map(tag => (
+              <Tag key={tag} text={tag} />
+            ))}
+          </View>
+        ) : null}
+        <Text variant="heading1">{product.title}</Text>
+        <Text color={styles.theme.color.text.detail}>{product.brand}</Text>
+        <Spacer size="xxs" />
+        <View style={styles.productInfo}>
+          <Text variant="highlight">USD {product.price}</Text>
+          <Text variant="highlight">{product.availabilityStatus}</Text>
+        </View>
+        <Spacer size="sml" />
+        <Text color={styles.theme.color.text.detail}>
+          {product.description}
+        </Text>
+      </ScrollView>
+    </Layout>
+  );
 }
