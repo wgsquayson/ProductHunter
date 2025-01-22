@@ -26,9 +26,11 @@ function Home() {
     resetSort();
     resetCategory();
 
-    if (!search) {
-      getInitialData();
+    if (search) {
+      return handleSearch(search);
     }
+
+    getInitialData();
   }
 
   function onPressProduct(productId: number) {
