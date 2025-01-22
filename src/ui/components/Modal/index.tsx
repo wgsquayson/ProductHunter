@@ -41,7 +41,7 @@ export default function Modal({
         <View style={styles.content}>
           <View style={styles.row}>
             <Text variant="highlight">{title}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity hitSlop={styles.theme.spacing.sml}>
               <Icon
                 name="close"
                 onPress={onClose}
