@@ -38,7 +38,8 @@ function Layout({header, children}: LayoutProps) {
       <View style={styles.header}>
         {header.canGoBack ? (
           <TouchableOpacity
-            onPress={navigation.canGoBack() ? navigation.goBack : returnToHome}>
+            onPress={navigation.canGoBack() ? navigation.goBack : returnToHome}
+            hitSlop={styles.theme.spacing.sml}>
             <Icon name="arrow-left" size={styles.theme.fontSizes.md} />
           </TouchableOpacity>
         ) : null}
