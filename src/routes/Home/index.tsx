@@ -24,7 +24,10 @@ function Home() {
   function handleRemoveFilters() {
     resetSort();
     resetCategory();
-    getInitialData();
+
+    if (!search) {
+      getInitialData();
+    }
   }
 
   const {
