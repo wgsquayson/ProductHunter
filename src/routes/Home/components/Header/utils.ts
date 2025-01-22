@@ -1,4 +1,4 @@
-import {ButtonProps} from '../../../../ui/components/';
+import {ButtonProps} from '@ui/components';
 import {SortParams} from '../../service/model';
 
 export const sortMap: Record<

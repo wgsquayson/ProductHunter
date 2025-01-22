@@ -4,11 +4,10 @@ import {
   TouchableOpacityProps,
   View,
 } from 'react-native';
-import {Text} from '../../../../ui/components';
 import Icon from '@react-native-vector-icons/fontawesome';
-import {useStyle} from '../../../../ui/hooks';
-
-import formatCurrency from '../../../../utils/formatCurrency';
+import {Text} from '@ui/components';
+import {useStyle} from '@ui/hooks';
+import formatCurrency from '@utils/formatCurrency';
 import {ProductListItem} from '../../service/model';
 
 export default function ProductListItemComponent({

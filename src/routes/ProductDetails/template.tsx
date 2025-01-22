@@ -1,10 +1,10 @@
 import {ScrollView, View} from 'react-native';
-import {Layout, Spacer, Text} from '../../ui/components';
-import {useStyle} from '../../ui/hooks';
+import {Layout, Spacer, Text} from '@ui/components';
+import {useStyle} from '@ui/hooks';
+import formatCurrency from '@utils/formatCurrency';
 import {TemplateProps} from './model';
 import Tag from './components/Tag';
 import FastImage from 'react-native-fast-image';
-import formatCurrency from '../../utils/formatCurrency';
 
 export default function ({product}: TemplateProps) {
   const styles = useStyle(theme => ({

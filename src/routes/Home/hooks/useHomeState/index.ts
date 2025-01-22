@@ -3,7 +3,7 @@ import {fetchProductCategories, fetchProducts} from '../../service';
 import {ITEMS_PER_PAGE} from '../../constants';
 import {HomeState} from './model';
 import {FetchProductsParams} from '../../service/model';
-import useOnce from '../../../../hooks/useOnce';
+import useOnce from '@hooks/useOnce';
 
 export default function useHomeState() {
   const [state, setState] = useState<HomeState>({

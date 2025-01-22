@@ -1,8 +1,8 @@
 import React from 'react';
 import {TextInput, View} from 'react-native';
-import {useStyle} from '../../../../ui/hooks';
 import Icon from '@react-native-vector-icons/fontawesome';
-import {Button, Spacer} from '../../../../ui/components';
+import {useStyle} from '@ui/hooks';
+import {Button, Spacer} from '@ui/components';
 import {HeaderProps} from './model';
 import {getCategoryName, getSortButtonProps} from './utils';
 import {categoriesListEmitter} from '../CategoriesList/utils';

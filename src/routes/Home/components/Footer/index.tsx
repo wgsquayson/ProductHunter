@@ -1,6 +1,6 @@
 import {ActivityIndicator, View} from 'react-native';
-import {Spacer} from '../../../../ui/components';
-import {useStyle} from '../../../../ui/hooks';
+import {Spacer} from '@ui/components';
+import {useStyle} from '@ui/hooks';
 import {FooterProps} from './model';
 
 export default function Footer({isLoadingMore}: FooterProps) {

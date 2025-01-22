@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList} from 'react-native';
-import {Layout} from '../../ui/components';
+import {Layout} from '@ui/components';
 import {TemplateProps} from './model';
 import ProductListItemComponent from './components/ProductListItem';
 import Separator from './components/Separator';

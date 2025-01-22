@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {ProductDetailsState} from './model';
 import {fetchProduct} from '../../service';
-import useOnce from '../../../../hooks/useOnce';
+import useOnce from '@hooks/useOnce';
 
 export default function useProductDetailsState(productId: number) {
   const [state, setState] = useState<ProductDetailsState>({

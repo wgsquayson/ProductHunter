@@ -1,6 +1,6 @@
 import {View} from 'react-native';
-import {useStyle} from '../../../../ui/hooks';
-import {Text} from '../../../../ui/components';
+import {useStyle} from '@ui/hooks';
+import {Text} from '@ui/components';
 import {TagProps} from './model';
 
 export default function Tag({text}: TagProps) {

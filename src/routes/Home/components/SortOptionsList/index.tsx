@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import {FlatList} from 'react-native';
+import {Button, Modal, Spacer} from '@ui/components';
 import {sortListEmitter} from './utils';
-import {Button, Modal, Spacer} from '../../../../ui/components';
 import {sortMap} from '../Header/utils';
 import {SortParams} from '../../service/model';
 import {SortOptionsListProps} from './model';

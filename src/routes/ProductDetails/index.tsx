@@ -1,7 +1,7 @@
 import useProductDetailsState from './hooks/useProductDetailsState';
 import {ProductDetailsProps} from './model';
 import Template from './template';
-import {Loading, Text} from '../../ui/components';
+import {Loading, Text} from '@ui/components';
 
 function ProductDetails({route}: ProductDetailsProps) {
   const {productId} = route.params;
