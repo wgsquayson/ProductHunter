@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View} from 'react-native';
+import {TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome';
 import {useStyle} from '@ui/hooks';
 import {Button, Spacer} from '@ui/components';
@@ -14,6 +14,7 @@ export default function Header({
   selectedCategory,
   selectedSort,
   onClearFilters,
+  onClearSearch,
 }: HeaderProps) {
   const styles = useStyle(theme => ({
     inputContainer: {
@@ -61,6 +62,17 @@ export default function Header({
           onChangeText={onSearch}
           style={styles.input}
         />
+        {search ? (
+          <TouchableOpacity
+            onPress={onClearSearch}
+            hitSlop={styles.theme.spacing.sml}>
+            <Icon
+              name="close"
+              color={styles.theme.color.text.inactive}
+              size={styles.theme.fontSizes.md}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
       <Spacer size="sml" />
       <View style={styles.buttonsContainer}>

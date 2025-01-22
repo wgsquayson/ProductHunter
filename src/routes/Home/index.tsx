@@ -53,14 +53,15 @@ function Home() {
     onTotalReached: handleTotalReached,
   });
 
-  const {search, handleSearch, resetSearch} = useProductSearch({
-    selectedSort,
-    onError: handleRequestError,
-    onTotalReached: handleTotalReached,
-    getInitialData,
-    onSearch: setupProductSearch,
-    onSuccess: products => updateState({products}),
-  });
+  const {search, handleSearch, resetSearch, handleClearSearch} =
+    useProductSearch({
+      selectedSort,
+      onError: handleRequestError,
+      onTotalReached: handleTotalReached,
+      getInitialData,
+      onSearch: setupProductSearch,
+      onSuccess: products => updateState({products}),
+    });
 
   const {selectedCategory, handleSelectCategory, resetCategory} =
     useProductFilter({
@@ -95,6 +96,7 @@ function Home() {
       }
       onClearFilters={handleRemoveFilters}
       onPressProduct={onPressProduct}
+      onClearSearch={handleClearSearch}
     />
   );
 }

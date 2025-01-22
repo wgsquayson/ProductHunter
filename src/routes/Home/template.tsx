@@ -25,6 +25,7 @@ export default function ({
   onPressSort,
   onClearFilters,
   onPressProduct,
+  onClearSearch,
 }: TemplateProps) {
   return (
     <>
@@ -39,6 +40,7 @@ export default function ({
               selectedCategory={selectedCategory}
               selectedSort={selectedSort}
               onClearFilters={onClearFilters}
+              onClearSearch={onClearSearch}
             />
           }
           ItemSeparatorComponent={Separator}

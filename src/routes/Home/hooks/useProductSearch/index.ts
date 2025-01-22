@@ -34,6 +34,15 @@ export default function useProductSearch({
     onTotalReached(data?.length);
   }, 500);
 
+  function resetSearch() {
+    setSearch('');
+  }
+
+  function handleClearSearch() {
+    resetSearch();
+    getInitialData({sort: selectedSort});
+  }
+
   async function handleSearch(value: string) {
     setSearch(value);
     onSearch();
@@ -45,13 +54,10 @@ export default function useProductSearch({
     debounceSearch(value);
   }
 
-  function resetSearch() {
-    setSearch('');
-  }
-
   return {
     search,
     handleSearch,
     resetSearch,
+    handleClearSearch,
   };
 }

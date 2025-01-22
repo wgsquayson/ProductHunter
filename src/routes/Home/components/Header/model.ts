@@ -6,4 +6,5 @@ export type HeaderProps = {
   selectedCategory?: string;
   selectedSort?: SortParams;
   onClearFilters: () => void;
+  onClearSearch: () => void;
 };
