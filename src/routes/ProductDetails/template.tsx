@@ -1,8 +1,9 @@
-import {Image, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {Layout, Spacer, Text} from '../../ui/components';
 import {useStyle} from '../../ui/hooks';
 import {TemplateProps} from './model';
 import Tag from './components/Tag';
+import FastImage from 'react-native-fast-image';
 
 export default function ({product}: TemplateProps) {
   const styles = useStyle(theme => ({
@@ -26,10 +27,10 @@ export default function ({product}: TemplateProps) {
   return (
     <Layout header={{title: 'Product details', canGoBack: true}}>
       <ScrollView>
-        <Image
+        <FastImage
           style={styles.image}
-          source={{uri: product.images[0]}}
-          resizeMode="contain"
+          source={{uri: product.images[0], priority: FastImage.priority.high}}
+          resizeMode={FastImage.resizeMode.contain}
         />
         <Spacer size="xs" />
         {product.tags.length > 0 ? (
