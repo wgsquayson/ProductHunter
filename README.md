@@ -1,79 +1,46 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# ProductHunter
 
-# Getting Started
+Welcome to ProductHunter! a product search app with some cool features, such as:
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+- Search products
+- Filter products by category
+- Sort products by price or rating
+- Paginate products on scroll
+- See a specific product details, with additional info
 
-## Step 1: Start the Metro Server
+The toolkit used to build this app was
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- [React Native](https://reactnative.dev/)
+- [Typescript](https://www.typescriptlang.org/)
+- [React Navigation](https://reactnavigation.org/) - for navigation and deep linking
+- [react-native-fast-image](https://github.com/DylanVann/react-native-fast-image) - for image caching
+- [react-native-onesignal](https://www.npmjs.com/package/react-native-onesignal) - for push notifications
+- [use-debounce](https://www.npmjs.com/package/use-debounce) - to debounce the search and avoid unecessary multiple api calls
+- [mitt](https://www.npmjs.com/package/mitt) - for emitting events
+- [axios](https://www.npmjs.com/package/axios) - for api calls
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Some disclaimers
 
-```bash
-# using npm
-npm start
+- Unfortunately, due to api limitations, it is not possible to search and filter products simultaneosly, and the app prevents this behavior
+- Push notifications, even though it is set up for both platforms, only work on android because I don't have an paid Apple Developer Account
 
-# OR using Yarn
-yarn start
-```
+### How to build and run the project
 
-## Step 2: Start your Application
+- clone this repository
+- run `cp .env.example .env` to create a `.env` file
+- fill the `ONESIGNAL_APP_ID` on the `.env` file - `4998e1be-e69b-4d71-a4a6-0609f6ac842f`
+- run `yarn` to install dependencies
+- run `npx pod-install` or `cd ios && pod install && cd ../` to install pods
+- run `yarn start` to start metro
+- run `yarn android` or `yarn ios` to build the app on your desired platform
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+### How to test deep linking
 
-### For Android
+- to open the homescreen, run the command `npx uri-scheme open "producthunter://" --platform`, where `platform` must be replaced with `ios` or `android`, for example: `npx uri-scheme open "producthunter://" --ios`
+- to open a specific product, get an product id on the [api page](https://dummyjson.com/docs/products#products-all) (click on "Show Output" to see some products in the "Get all products" section), and run the command `npx uri-scheme open "producthunter://productDetails/id" --platform`, with `id` being the id of the product you picked and again with platform being either `ios` or `android`. For example `npx uri-scheme open "producthunter://productDetails/1" --ios`
 
-```bash
-# using npm
-npm run android
+### How to test push notifications
 
-# OR using Yarn
-yarn android
-```
+OneSignal recommends testing this on a physical device, it works on the emulator but takes longer to receive notifications
 
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Basically, I would need to send the notification from inside the platform, but I can also invite someone to join the project, and I can give instructions on how to do it. Either way, feel free to reach me at `wgsquayson@gmail.com`
