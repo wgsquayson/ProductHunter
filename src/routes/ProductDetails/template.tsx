@@ -5,6 +5,7 @@ import formatCurrency from '@utils/formatCurrency';
 import {TemplateProps} from './model';
 import Tag from './components/Tag';
 import FastImage from 'react-native-fast-image';
+import Icon from '@react-native-vector-icons/fontawesome';
 
 export default function ({product}: TemplateProps) {
   const styles = useStyle(theme => ({
@@ -12,7 +13,7 @@ export default function ({product}: TemplateProps) {
       width: '100%',
       height: 300,
     },
-    tagsContainer: {
+    row: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: theme.spacing.xxs,
@@ -35,14 +36,20 @@ export default function ({product}: TemplateProps) {
         />
         <Spacer size="xs" />
         {product.tags.length > 0 ? (
-          <View style={styles.tagsContainer}>
+          <View style={styles.row}>
             {product.tags.map(tag => (
               <Tag key={tag} text={tag} />
             ))}
           </View>
         ) : null}
         <Text variant="heading1">{product.title}</Text>
-        <Text color={styles.theme.color.text.detail}>{product.brand}</Text>
+        <View style={styles.productInfo}>
+          <Text color={styles.theme.color.text.detail}>{product.brand}</Text>
+          <View style={styles.row}>
+            <Icon name="star" />
+            <Text color={styles.theme.color.text.detail}>{product.rating}</Text>
+          </View>
+        </View>
         <Spacer size="xxs" />
         <View style={styles.productInfo}>
           <Text variant="highlight">{formatCurrency(product.price)}</Text>

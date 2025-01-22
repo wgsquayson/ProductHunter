@@ -6,4 +6,5 @@ export type Product = {
   brand: string;
   availabilityStatus: string;
   price: number;
+  rating: number;
 };
